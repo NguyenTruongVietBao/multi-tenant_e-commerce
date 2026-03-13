@@ -16,7 +16,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd root/services/multi-tenant_e-commerce
+            cd /root/services/multi-tenant_e-commerce
             git fetch origin
             git checkout production
             git pull
