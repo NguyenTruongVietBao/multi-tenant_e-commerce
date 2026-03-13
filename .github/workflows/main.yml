@@ -9,18 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy using ssh
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /services/multi-tenant_e-commerce
+            cd /root/services/multi-tenant_e-commerce
             git fetch origin
             git checkout production
             git pull
-            docker build -t multitenant-ecommerce
+            docker build -t multitenant-ecommerce .
             docker stop multitenant-ecommerce-container || true
             docker rm multitenant-ecommerce-container || true
             docker run -d --name multitenant-ecommerce-container -p 4000:3000 multitenant-ecommerce
